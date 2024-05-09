@@ -113,19 +113,19 @@ async function main() {
     })
 
     // Endpoint Delete [DELETE] /personagem/:id
-    app.delete('/personagem/:id', function (req, res) {
+    app.delete('/personagem/:id', async function (req, res) {
 
         // Acessamos o parametro de rota
         const id = req.params.id
 
         // Checamos se o item do ID - 1 esta a lista, exibindo
         // uma mensagem caso nao esteja
-        if (!lista[id - 1]) {
-            return res.status(404).send('Item não encontrado.')
-        }
+        // if (!lista[id - 1]) {
+        //     return res.status(404).send('Item não encontrado.')
+        // }
 
-        // Remover o item da lista usando ID - 1
-        delete lista[id - 1]
+        // Remover o item da Collection usando ID
+        await collection.deleteOne({_id: new ObjectId(id) })
 
         // Enviamos uma mensagem de sucesso
         res.send('Item deletado com sucesso: ' + id)
